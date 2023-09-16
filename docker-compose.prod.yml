@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  mypostgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_USER: myuser
+      POSTGRES_DB: mydb
+    volumes:
+      - ./init-product.sql:/docker-entrypoint-initdb.d/init-product.sql
+    ports:
+      - "5433:5432"
+
+  my-spring-app:
+    image: mdotlic/rest-crud:latest
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mypostgres
