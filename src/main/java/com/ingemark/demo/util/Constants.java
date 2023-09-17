@@ -32,6 +32,7 @@ public class Constants {
     public static final String PASSWORD_CHANGE_ERROR = "Error changing password for user: {}. Exception: {}";
     public static final String PASSWORD_CHANGE_UNEXPECTED_ERROR = "Unexpected error changing password for user: {}. Exception: {}";
     public static final String UNEXPECTED_ERROR = "An unexpected error occurred.";
+    public static final String RESPONSE_BODY_NOT_NULL = "Response body should not be null";
     public static final String CSFR_TOKEN = "csrfToken";
     public static final String MIN_VALUE = "0.01";
     public static final String EXCHANGE_RATE= "srednji_tecaj";

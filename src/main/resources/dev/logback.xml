@@ -21,6 +21,7 @@
 
     <logger name="com.ingemark.demo.controller" level="debug"/>
     <logger name="com.ingemark.demo.repository" level="debug"/>
+    <logger name="com.ingemark.demo.service" level="debug"/>
 
     <root level="info">
         <appender-ref ref="STDOUT" />

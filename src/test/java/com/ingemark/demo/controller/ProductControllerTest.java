@@ -58,7 +58,7 @@ class ProductControllerTest {
         ResponseEntity<List<Product>> response = productController.getProducts();
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(response.getBody(), "Response body should not be null");
+        assertNotNull(response.getBody(), Constants.RESPONSE_BODY_NOT_NULL);
         assertEquals(1, response.getBody().size());
     }
 
