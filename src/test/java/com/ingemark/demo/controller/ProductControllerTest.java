@@ -53,7 +53,7 @@ class ProductControllerTest {
     @Test
     void testGetProductsRateLimitExceeded() {
         when(rateLimitBucket.tryConsume(Constants.GET_LIST_TOKEN_COST)).thenReturn(false);
-        ResponseEntity<Page<Product>> response = productController.getProducts(pageable); // updated return type
+        ResponseEntity<Page<Product>> response = productController.getProducts(pageable);
         assertEquals(HttpStatus.TOO_MANY_REQUESTS, response.getStatusCode());
     }
 
@@ -66,7 +66,7 @@ class ProductControllerTest {
 
         when(productService.findAll(any(Pageable.class))).thenReturn(productPage);
 
-        ResponseEntity<Page<Product>> response = productController.getProducts(pageable); // updated return type
+        ResponseEntity<Page<Product>> response = productController.getProducts(pageable);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody(), Constants.RESPONSE_BODY_NOT_NULL);

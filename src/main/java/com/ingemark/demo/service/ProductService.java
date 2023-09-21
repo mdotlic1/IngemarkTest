@@ -13,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Service
 public class ProductService {
@@ -37,11 +36,6 @@ public class ProductService {
         logger.info(Constants.SAVING_PRODUCTS_LOG_MESSAGE, productInputDTO.getCode());
         Product product = new Product();
         return createProduct(productInputDTO, product);
-    }
-
-    public List<Product> findAll() {
-        logger.info(Constants.FETCHING_PRODUCTS_LOG_MESSAGE);
-        return productRepository.findAll();
     }
 
     public Page<Product> findAll(Pageable pageable) {
