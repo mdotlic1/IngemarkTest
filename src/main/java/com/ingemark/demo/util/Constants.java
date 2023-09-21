@@ -2,7 +2,9 @@ package com.ingemark.demo.util;
 
 public class Constants {
 
-    public static final String HNB_API_URL = "https://api.hnb.hr/tecajn-eur/v3?valuta=USD";
+    public static String getHnbApiUrl(String currency) {
+        return String.format("https://api.hnb.hr/tecajn-eur/v3?valuta=%s", currency);
+    }
     public static final String EXCHANGE_RATE_FETCH_EXCEPTION_MESSAGE = "Failed to fetch the exchange rate from the external API";
     public static final String CODE_ALREADY_EXISTS_EXCEPTION_MESSAGE = "Code already exists in the database";
     public static final String CODE_ALREADY_EXISTS_LOG_MESSAGE = "Product with code {} already exists";

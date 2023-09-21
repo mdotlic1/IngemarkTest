@@ -8,6 +8,9 @@ import io.github.bucket4j.Bucket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,9 +34,10 @@ public class ProductController {
 
     @PreAuthorize("hasRole('USER')")
     @GetMapping
-    public ResponseEntity<List<Product>> getProducts() {
+    public ResponseEntity<Page<Product>> getProducts(@PageableDefault(size = 10) Pageable pageable) {
         if (rateLimitBucket.tryConsume(Constants.GET_LIST_TOKEN_COST)) {
-            return ResponseEntity.ok(productService.findAll());
+            Page<Product> products = productService.findAll(pageable);
+            return ResponseEntity.ok(products);
         } else {
             logger.warn(Constants.RATE_LIMIT_EXCEEDED_LOG_MESSAGE);
             return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body(null);

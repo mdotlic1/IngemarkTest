@@ -33,7 +33,7 @@ public class ExchangeRateService {
 
         logger.info(Constants.FETCHING_FRESH_RATE_LOG_MESSAGE);
 
-        HnbResponse[] response = restTemplate.getForObject(Constants.HNB_API_URL, HnbResponse[].class);
+        HnbResponse[] response = restTemplate.getForObject(Constants.getHnbApiUrl("USD"), HnbResponse[].class);
 
         if (response == null || response.length == 0) {
             logger.error(Constants.FAILED_FETCHING_RATE_LOG_MESSAGE);

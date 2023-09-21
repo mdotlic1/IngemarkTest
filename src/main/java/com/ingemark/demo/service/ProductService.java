@@ -8,6 +8,8 @@ import com.ingemark.demo.repository.ProductRepository;
 import com.ingemark.demo.util.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -40,6 +42,11 @@ public class ProductService {
     public List<Product> findAll() {
         logger.info(Constants.FETCHING_PRODUCTS_LOG_MESSAGE);
         return productRepository.findAll();
+    }
+
+    public Page<Product> findAll(Pageable pageable) {
+        logger.info(Constants.FETCHING_PRODUCTS_LOG_MESSAGE);
+        return productRepository.findAll(pageable);
     }
 
     public Product findById(Long id) {

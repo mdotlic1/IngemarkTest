@@ -11,6 +11,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -27,6 +31,9 @@ class ProductControllerTest {
 
     @Mock
     private Bucket rateLimitBucket;
+
+    @Mock
+    private Pageable pageable;
 
     @InjectMocks
     private ProductController productController;
@@ -46,20 +53,24 @@ class ProductControllerTest {
     @Test
     void testGetProductsRateLimitExceeded() {
         when(rateLimitBucket.tryConsume(Constants.GET_LIST_TOKEN_COST)).thenReturn(false);
-        ResponseEntity<List<Product>> response = productController.getProducts();
+        ResponseEntity<Page<Product>> response = productController.getProducts(pageable); // updated return type
         assertEquals(HttpStatus.TOO_MANY_REQUESTS, response.getStatusCode());
     }
 
     @Test
     void testGetProductsSuccess() {
         when(rateLimitBucket.tryConsume(Constants.GET_LIST_TOKEN_COST)).thenReturn(true);
-        when(productService.findAll()).thenReturn(Collections.singletonList(new Product()));
 
-        ResponseEntity<List<Product>> response = productController.getProducts();
+        List<Product> products = Collections.singletonList(new Product());
+        Page<Product> productPage = new PageImpl<>(products, PageRequest.of(0, 10), products.size());
+
+        when(productService.findAll(any(Pageable.class))).thenReturn(productPage);
+
+        ResponseEntity<Page<Product>> response = productController.getProducts(pageable); // updated return type
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody(), Constants.RESPONSE_BODY_NOT_NULL);
-        assertEquals(1, response.getBody().size());
+        assertEquals(1, response.getBody().getNumberOfElements());
     }
 
 
